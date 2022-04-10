@@ -1,7 +1,21 @@
 import pytest
-from pytest_bdd import given, parsers, then, scenario
+from pytest_bdd import given, parsers, scenario, then
 
-from test_task import delivery_cost_calculation, MIN_DELIVERY_SUM
+from test_task import MIN_DELIVERY_SUM, delivery_cost_calculation
+from tests_features.steps_data import (
+    distance_1,
+    distance_2,
+    distance_3,
+    distance_4,
+    fragile,
+    high,
+    increased,
+    large,
+    normal,
+    small,
+    standard,
+    very_high,
+)
 
 
 @scenario("test_for_test_task.feature", "Min sum of delivery")
@@ -37,54 +51,18 @@ def context_dict():
 @given(parsers.parse('I have {condition} delivery terms'), target_fixture="context_dict")
 def given_step(condition):
     conditions_map = {
-        'standard': {'distance': 10,
-                     'dimension': 'small',
-                     'is_fragile': False,
-                     'workload': 'normal'},
-        'fragile': {'distance': 31,
-                    'dimension': 'small',
-                    'is_fragile': True,
-                    'workload': 'normal'},
-        'distance_1': {'distance': 1,
-                       'dimension': 'large',
-                       'is_fragile': False,
-                       'workload': 'high'},
-        'distance_2': {'distance': 2,
-                       'dimension': 'large',
-                       'is_fragile': False,
-                       'workload': 'high'},
-        'distance_3': {'distance': 10,
-                       'dimension': 'large',
-                       'is_fragile': False,
-                       'workload': 'high'},
-        'distance_4': {'distance': 30,
-                       'dimension': 'large',
-                       'is_fragile': False,
-                       'workload': 'high'},
-        'small': {'distance': 10,
-                  'dimension': 'small',
-                  'is_fragile': False,
-                  'workload': 'high'},
-        'large': {'distance': 10,
-                  'dimension': 'large',
-                  'is_fragile': False,
-                  'workload': 'high'},
-        'normal': {'distance': 10,
-                   'dimension': 'large',
-                   'is_fragile': True,
-                   'workload': 'normal'},
-        'increased': {'distance': 10,
-                      'dimension': 'large',
-                      'is_fragile': True,
-                      'workload': 'increased'},
-        'high': {'distance': 10,
-                 'dimension': 'large',
-                 'is_fragile': True,
-                 'workload': 'high'},
-        'very high': {'distance': 10,
-                      'dimension': 'large',
-                      'is_fragile': True,
-                      'workload': 'very_high'},
+        'standard': standard,
+        'fragile': fragile,
+        'distance_1': distance_1,
+        'distance_2': distance_2,
+        'distance_3': distance_3,
+        'distance_4': distance_4,
+        'small': small,
+        'large': large,
+        'normal': normal,
+        'increased': increased,
+        'high': high,
+        'very high': very_high,
     }
     context = conditions_map[condition]
     return context

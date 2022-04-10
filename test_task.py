@@ -20,7 +20,9 @@ workload_ratio = {
 MIN_DELIVERY_SUM = 400
 
 
-def get_cost_from_distance(distance):
+def get_cost_from_distance(distance: float) -> float:
+    """Implement the logic for choosing
+    delivery costs relative to distance."""
     if distance >= 30:
         return delivery_distance['more_30']
     elif 30 > distance >= 10:
@@ -30,7 +32,13 @@ def get_cost_from_distance(distance):
     return delivery_distance['less_2']
 
 
-def delivery_cost_calculation(distance, dimension, is_fragile, workload):
+def delivery_cost_calculation(
+        distance: float,
+        dimension: str,
+        is_fragile: bool,
+        workload: str) -> int:
+    """Implement the logic for calculating
+    the final cost of delivery."""
     fragile_cost = 0
     if is_fragile is True:
         if distance > 30:
