@@ -48,8 +48,8 @@ increased = {'distance': 10,
              'is_fragile': True,
              'workload': 'increased'}
 
-high = {'distance': 9,
-        'dimension': 'small large',
+high = {'distance': 10,
+        'dimension': 'large',
         'is_fragile': True,
         'workload': 'high'}
 
