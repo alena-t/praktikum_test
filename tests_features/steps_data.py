@@ -19,7 +19,7 @@ distance_2 = {'distance': 2,
               'workload': 'very high'}
 
 distance_3 = {'distance': 10,
-              'dimension': 'large',
+              'dimension': 'large small',
               'is_fragile': False,
               'workload': 'high'}
 
