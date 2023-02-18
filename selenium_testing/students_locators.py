@@ -1,13 +1,14 @@
 from selenium.webdriver.common.by import By
 
 
-class MainPage:
+class MainPageLocators:
     url_main = 'https://stellarburgers.nomoreparties.site/'  # адрес главной страницы
     auth_button_main = By.XPATH, '//*[contains(@class, "button_button")]'  # кнопка "Войти" на главной странице
     registration_button = By.XPATH, '(//*[contains(@class, "Auth_link")])[1]'  # кнопка зарегистрироваться
     name_registration_field = By.XPATH, '(//*[contains(@class, "input__textfield")])[1]'  # инпут имени
     email_registration_field = By.XPATH, '(//*[contains(@class, "input__textfield")])[1]'  # инпут email
     password_registration_field = By.XPATH, '(//*[contains(@class, "input__textfield")])[1]'  # инпут password
+
 
 
 
