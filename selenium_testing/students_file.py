@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium_testing.students_locators import MainPage as MP
@@ -9,7 +10,7 @@ from selenium.webdriver.chrome.options import Options
 def test_transition_section_constructor_sauce_success():
     options = Options()
     options.add_argument('--headless')
-    driver = webdriver.Chrome(executable_path='/Users/alena/Dev/praktikum_test/chromedriver', chrome_options=options)
+    driver = webdriver.Chrome(service=Service(executable_path='/Users/alena/Dev/praktikum_test/chromedriver'), chrome_options=options)
     driver.get(MP.url_main)
     WebDriverWait(driver, 3).until(expected_conditions.element_to_be_clickable(MP.auth_button_main))
     button_main = driver.find_element(*MP.auth_button_main)
@@ -25,6 +26,7 @@ def test_transition_section_constructor_sauce_success():
     driver.execute_script(MP.scroll, element_sauce)
     WebDriverWait(driver, 3).until(expected_conditions.visibility_of_element_located(MP.user_sauce))
     transition_sauce = driver.find_element(*MP.active_element_constructor)
+    driver.file_detector_context()
     assert transition_sauce.text == 'Соусы'
     driver.quit()
 
@@ -75,11 +77,11 @@ def test_transition_section_constructor_loaf_success():
     driver.quit()
 
 
-def test_buns_click(driver):
+def test_buns_click(driver, example_correct_user):
+    name_for_registration = example_correct_user.get('name')
 
     driver.find_element(By.XPATH, "/html/body/div/div/main/section[1]/div[1]/div[2]/span").click()
 
-    time.sleep(3)
 
     driver.find_element(By.XPATH, "/html/body/div/div/main/section[1]/div[1]/div[1]/span").click()
 

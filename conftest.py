@@ -14,3 +14,13 @@ def example_correct_user():
 @pytest.fixture
 def example_not_correct_user():
     return UserRegistration(name='', login='IvanSukhanov366', password='12345')
+
+
+@pytest.fixture(scope='function')
+def driver():
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver.get('https://stellarburgers.nomoreparties.site/')
+    yield driver
+    driver.quit()
+
+

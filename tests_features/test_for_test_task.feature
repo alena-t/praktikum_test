@@ -4,6 +4,7 @@ Feature: Delivery cost checking
 
   Scenario: Min sum of delivery
     Given I have standard delivery terms
+    When I click on login button
     Then I see min sum of delivery
 
   Scenario: Fragile more 30 km
