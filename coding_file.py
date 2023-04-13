@@ -25,6 +25,7 @@ class MealType(str, Enum):
     VEGETARIAN = 'vegetarian'
     STANDARD = 'standard'
     CHILDISH = 'childish'
+    GROUPED = 'grouped'
 
 
 MEAL_DAYS_MAPPING = {
@@ -42,7 +43,8 @@ MEAL_DAYS_MAPPING = {
 MEAL_TYPE_MAPPING = {
     'ДЕТСКИЙ': MealType.CHILDISH,
     'СТАНДАРТ': MealType.STANDARD,
-    'ВЕГЕТАРИАНСКИЙ': MealType.VEGETARIAN
+    'ВЕГЕТАРИАНСКИЙ': MealType.VEGETARIAN,
+    'РАЦИОН ГРУППОВОЙ': MealType.GROUPED,
 }
 
 EXCLUDED_DISHES = ['ПЛОВ', 'БИФСТРОГАНОВ', 'БИФ.СТРОГАНОВ', 'БИФ-СТРОГАНОВ']
@@ -51,18 +53,21 @@ string_for_parse = '1 РАЦИОН (ПН, СР, ПТ, ВСК.): НАРЕЗКА �
 string_for_parse_1 = "ПН/СР/ПТ/ВС: НАРЕЗКА МЯСНАЯ, ОМЛЕТ НАТУРАЛЬНЫЙ. ВТ/ЧТ/СБ: НАРЕЗКА СЫРНАЯ, КАША РИСОВАЯ МОЛОЧНАЯ С КУРАГОЙ"
 string_for_parse_2 = "ПН/СР/ПТ/ВС: САЛАТ ИЗ Б/К КАПУСТЫ С ЗЕЛЕНЬЮ, СУП-ЛАПША КУРИНАЯ, СВИНИНА ТУШЕНАЯ С ОВОЩАМИ, РИС ОТВАРНОЙ, КОНДИТЕРСКОЕ ИЗДЕЛИЕ. ВТ/ЧТ/СБ: САЛАТ ИЗ СВЕЖИХ ОВОЩЕЙ, ЩИ ИЗ Б/К КАПУСТЫ С КУРИЦЕЙ И СМЕТАНОЙ, КУРИНОЕ ФИЛЕ ТУШЕНОЙ, МАКАРОНЫ ОТВАРНЫЕ КОНДИТЕРСКОЕ  ИЗДЕЛИЕ"
 string_for_parse_3 = "1 РАЦИОН (ПН, СР, ПТ, ВСК.): САЛАТ ИЗ Б/К КАПУСТЫ, ОГУРЦОВ И КУКУРУЗЫ КОНСЕРВИРОВАННОЙ, СУП КАРТОФЕЛЬНЫЙ С РИСОМ И КУРИЦЕЙ, ГУЛЯШ ИЗ ГОВЯДИНЫ С КАРТОФЕЛЕМ ОТВАРНЫМ, СОК, КОНДИТЕРСКОЕ ИЗДЕЛИЕ, БУЛОЧКА ПШЕНИЧНАЯ. 2 РАЦИОН (ВТ, ЧТ., СУБ.): ОВОЩИ НАТУРАЛЬНЫЕ (ОГУРЦЫ, ПОМИДОРЫ), БОРЩ ИЗ СВЕЖЕЙ КАПУСТЫ С КУРИЦЕЙ И СМЕТАНОЙ, КУРИНОЕ ФИЛЕ НЕЖНОЕ, РИС ОТВАРНОЙ, СОК, КОНДИТЕРСКОЕ ИЗДЕЛИЕ, БУЛОЧКА ПШЕНИЧНАЯ"
+string_for_parse_4 = "РАЦИОН (ПН, СР, ПТ, ВСК.): МАСЛО СЛИВОЧНОЕ, ДЖЕМ, КАША ВЯЗКАЯ ПШЕННАЯ МОЛОЧНАЯ СО СЛИВОЧНЫМ МАСЛОМ, КОНДИТЕРСКОЕ ИЗДЕЛИЕ БЕЗ КРЕМА, АПЕЛЬСИН, ЧАЙ С САХАРОМ, ХЛЕБ  РАЦИОН (ВТ, ЧТ., СУБ.): МАСЛО СЛИВОЧНОЕ, ДЖЕМ, КАША ВЯЗКАЯ ПШЕННАЯ МОЛОЧНАЯ СО СЛИВОЧНЫМ МАСЛОМ, ЯБЛОКО, КОНДИТЕРСКОЕ ИЗДЕЛИЕ БЕЗ КРЕМА, ЧАЙ С САХАРОМ, ХЛЕБ"
+string_for_parse_5 = "1 РАЦИОН (ПН, СР, ПТ, ВСК.): БЛИНЧИКИ С ДЖЕМОМ, КОНДИТЕРСКОЕ ИЗДЕЛИЕ, ВОДА, БУЛОЧКА ПШЕНИЧНАЯ. 2 РАЦИОН (ВТ, ЧТ., СУБ.): КАША \"ДРУЖБА\" МОЛОЧНАЯ С МАСЛОМ, КОНДИТЕРСКОЕ ИЗДЕЛИЕ, ВОДА, БУЛОЧКА ПШЕНИЧНАЯ."
 
 
 def get_meal_menu_list(description: str):
     meals_dict = {}
     dishes = []
     days = ()
+    pattern = r'\s{2,}РАЦИОН\s'
+    founded_string = re.findall(pattern, description)
+    for string in founded_string:
+        string = string.replace(' ', '.', 1)
+        description = re.sub(pattern, string, description, 1)
     description = description.replace(
         ',', ';').replace('.)', ')').replace('.;', ';').replace('.:', ':').replace('. ', ':')
-    # description = description.replace('.)', ')')
-    # description = description.replace('.;', ';')
-    # description = description.replace('.:', ':')
-    # description = description.replace('. ', ':')
     meals_list = description.split(':')
     for num, something in enumerate(meals_list, 1):
         if num % 2 != 0:
@@ -87,6 +92,12 @@ def get_meal_menu_list(description: str):
                 if all(dish not in string for dish in EXCLUDED_DISHES):
                     string = string.replace(';', ',')
                     something = re.sub(pattern, string, something, 1)
+            pattern = "\\\"\w*\\\""
+            founded_string = re.findall(pattern, something)
+            for string in founded_string:
+                string = string.replace('\\', '')
+                string = string.replace('\"', '\'')
+                something = re.sub(pattern, string, something, 1)
             something_split = something.split(';')
             for some in something_split:
                 dishes.append(some.strip('. , ; :').capitalize())
@@ -97,7 +108,9 @@ def get_meal_menu_list(description: str):
 
 
 if __name__ == "__main__":
-    print(get_meal_menu_list(string_for_parse))
-    print(get_meal_menu_list(string_for_parse_1))
-    print(get_meal_menu_list(string_for_parse_2))
-    print(get_meal_menu_list(string_for_parse_3))
+    # print(get_meal_menu_list(string_for_parse))
+    # print(get_meal_menu_list(string_for_parse_1))
+    # print(get_meal_menu_list(string_for_parse_2))
+    # print(get_meal_menu_list(string_for_parse_3))
+    # print(get_meal_menu_list(string_for_parse_4))
+    print(get_meal_menu_list(string_for_parse_5))

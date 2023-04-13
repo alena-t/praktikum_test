@@ -1,4 +1,6 @@
 import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
 
 class UserRegistration:
@@ -18,8 +20,9 @@ def example_not_correct_user():
 
 @pytest.fixture(scope='function')
 def driver():
-    driver = webdriver.Chrome(ChromeDriverManager().install())
-    driver.get('https://stellarburgers.nomoreparties.site/')
+    service = Service(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
+    driver = webdriver.Chrome(service=service)
+    driver.get('https://qa-scooter.praktikum-services.ru/')
     yield driver
     driver.quit()
 
