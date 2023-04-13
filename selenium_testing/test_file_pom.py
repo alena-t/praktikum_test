@@ -1,3 +1,6 @@
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
 from selenium_testing.students_locators import MainPage
 
 
@@ -8,7 +11,7 @@ class BurgerLoginPage:
     def login_button(self):
         return self.driver.find_element(*MainPage.auth_button_main)
 
-    def registration_locator(self):
+    def registration_button(self):
         return self.driver.find_element(*MainPage.registration_button)
 
     def name_registration_locator(self):
@@ -36,10 +39,12 @@ class BurgerLoginPage:
         self.login_button().text()
 
     def click_registration_button(self):
-        self.registration_locator().click()
+        self.registration_button().click()
 
     def register(self, name, email, password):
         self.set_name(name)
         self.set_email(email)
         self.set_password(password)
+        WebDriverWait(self.driver, 3).until(
+            expected_conditions.text_to_be_present_in_element(*MainPage.auth_button_main, "Выйти"))
         self.click_registration_button()

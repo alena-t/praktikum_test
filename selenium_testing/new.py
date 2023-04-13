@@ -1,12 +1,13 @@
 from selenium import webdriver
 
+from selenium_testing.sun_9 import Pats
 from selenium_testing.test_file_pom import BurgerLoginPage
 
 
 class TestBurgersLogin:
 
     driver = None
-
+    pat_1 = Pats()
     @classmethod
     def setup_class(cls):
         cls.driver = webdriver.Chrome(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')

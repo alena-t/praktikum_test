@@ -38,7 +38,7 @@ class LoginPage:
     url_login = 'https://stellarburgers.nomoreparties.site/login' # адрес страницы авторизации
     reg_button = By.CSS_SELECTOR, '.Auth_link__1fOlj' # кнопка "Зарегистрироваться" на странице авторизации
     log_fld = By.XPATH, "//div/h2[text()='Вход']" # заголовок "Вход" на странице авторизации
-    fld_email = By.XPATH, '//fieldset[1]/div/div/input' # поле email на странице авторизации
+    fld_email = By.XPATH, '//fieldset[{}]/div/div/input' # поле email на странице авторизации
     fld_pass = By.XPATH, '//fieldset[2]/div/div/input' # поле пароля на странице авторизации
     auth_button_login = By.XPATH, '//div/form/button' # кнопка "Войти" на странице авторизации
     rec_button = By.XPATH, '//div/p[2]/a' # кнопка "Восстановить пароль" на странице авторизации
