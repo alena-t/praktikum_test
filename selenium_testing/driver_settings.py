@@ -13,20 +13,20 @@ from selenium_testing.elements_to_find import TestLocators
 from selenium_testing.page_files import SearchForm
 
 
-# def test_do_something():
-#     service = Service(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
-#     driver = webdriver.Chrome(service=service)
-#     driver.get('https://ostrovok.ru/')
-#     search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
-#     search_form.search_input.search_with_wait('Moscow')
-#     search_form.search_button.click()
-#     region_id = 2395
-#     url = furl.furl(driver.current_url)
-#     search_page = url.args
-#     q_param = int(search_page['q'])
-#     driver.close()
-#     assert q_param == region_id, \
-#         f'Serp q param is {q_param}, expected Moscow with id {region_id}'
+def test_do_something():
+    service = Service(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
+    driver = webdriver.Chrome(service=service)
+    driver.get('https://ostrovok.ru/')
+    search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
+    search_form.search_input.search_with_wait('Moscow')
+    search_form.search_button.click()
+    region_id = 2395
+    url = furl.furl(driver.current_url)
+    search_page = url.args
+    q_param = int(search_page['q'])
+    driver.close()
+    assert q_param == region_id, \
+        f'Serp q param is {q_param}, expected Moscow with id {region_id}'
 
 
 def do_something():
@@ -37,10 +37,14 @@ def do_something():
     # driver = webdriver.Chrome(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
     # options.add_argument('--headless')
     service = Service(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
-    driver = webdriver.Chrome(options=options, service=service)
+    options.add_argument('--window-size=1920,1080')
+    driver = webdriver.Chrome(service=service, options=options)
     # driver = webdriver.Chrome(, executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
     driver.get('https://ostrovok.ru/')
     search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
+    some_element = driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR)
+    driver.implicitly_wait(2)
+    WebDriverWait(driver, 5).until_not(expected_conditions.visibility_of_element_located(driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR)))
     search_form.search_input.search_with_wait('Moscow')
     search_form.search_button.click()
     region_id = 2395
