@@ -42,7 +42,16 @@ def test_exception_for_unset_values():
 
 @pytest.mark.parametrize('some_distance, result',
                          [(1, 400), (2, 420), (9, 420),
-                          (10, 560), (29, 560), (30, 700), (31, 700)])
+                          (10, 560), (29, 560), (30, 700), (31, 700)],
+                         ids=[
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_negative',
+                             'value_2_negative'
+                         ])
 def test_change_sum_from_distance(some_distance, result):
     distance = some_distance
     dimension = 'large'
