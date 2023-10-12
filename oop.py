@@ -3,7 +3,11 @@ class Animal:
 
     def __init__(self, name):
         self.name = name
-        self._head = 1
+        self.__head = 1
+
+    @property
+    def head(self):
+        return self.__head
 
     def eat(self, food_count):
         if food_count >= 1:
@@ -43,30 +47,30 @@ class Dog(Animal):
     def __init__(self, name):
         super().__init__(name)
         self.paws = 4
-        self.__tail = 1
+        self.tail = 1
 
     def _say_something(self):
         print(f'{self.name} говорит Гав')
 
-    @property
-    def tail(self):
-        return self.__tail
 
-    def division(self, num):
-        try:
-            result = self.paws / num
-        except ZeroDivisionError:
-            result = 'Нельзя делить на 0'
-        finally:
-            result_1 = 'Это выход из программы, не уверены, что все хорошо'
+def some_func(some_arg):
+    try:
+        result = 10 / some_arg
+        result = result + 1
+    except Exception as exc:
+        print(f'Произошло исключение {exc}')
+    finally:
+        result = 10 * some_arg
 
-        return result, result_1
+    return result
 
+
+def some_func_2(some_arg):
+    if type(some_arg) in ['str', 'int']:
+        print('ОК')
+    raise TypeError('Некорректный тип аргумента')
 
 
 if __name__ == '__main__':
-    cat = Cat('Барсик')
-    animal = Animal('Кто-то')
-    dog = Dog('Рекс')
-    print(dog.division(4))
+    print(some_func('0'))
 
