@@ -6,7 +6,7 @@ class CatForTest:
         self._name = name
         self.__tail = tail
         self.color = {}
-        self.mustage = []
+        self.mustache = []
         self.age = age
 
     def date_change(self, date):
@@ -16,8 +16,8 @@ class CatForTest:
     def change_name(self, new_name):
         self.name = new_name
 
-    def add_mustage(self, mustage_color):
-        self.mustage.append(mustage_color)
+    def add_mustage(self, mustache_color):
+        self.mustage.append(mustache_color)
 
     def add_cat_color(self, color, where):
         self.color[where] = color
