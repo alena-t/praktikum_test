@@ -44,13 +44,13 @@ def test_exception_for_unset_values():
                          [(1, 400), (2, 420), (9, 420),
                           (10, 560), (29, 560), (30, 700), (31, 700)],
                          ids=[
-                             'positive value 1',
-                             'positive value 2',
-                             'positive value 3',
-                             'positive value 4',
-                             'positive value 5',
-                             'negative value 1',
-                             'negative value 2'
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_positive',
+                             'value_1_negative',
+                             'value_2_negative'
                          ])
 def test_change_sum_from_distance(some_distance, result):
     distance = some_distance
