@@ -1,25 +1,24 @@
 class TestCat:
-    lapki = 4
 
-    def __init__(self, colore, ears, tail):
+    def __init__(self, color, ears, tail):
         self.tail = tail
         self.head = 1
-        self.mustage = 10
-        self.colore = colore
+        self.color = color
         self.ears = ears
+        self.paws = 4
 
-    def set_mustages(self, mustage_count):
-        self.mustage = mustage_count
+    def set_color(self, color):
+        self.color = color
 
 
 class TestDog(TestCat):
 
-    def change_colore(self, new_colore):
-        self.colore = new_colore
+    def change_color(self, new_colore):
+        self.color = new_colore
 
 
 cat_1 = TestCat("yellow", 2, 1)
 dog_1 = TestDog("brown", 2, 2)
-cat_1.set_mustages(7)
-dog_1.set_mustages(8)
-dog_1.change_colore("red")
+cat_1.set_color("orange")
+dog_1.set_color("black")
+dog_1.change_color("red")
