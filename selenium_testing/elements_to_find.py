@@ -105,3 +105,6 @@ class TestLocators:
     HIDDEN_SF_DATES = By.XPATH, '//*[@class="zenregioninfo-dates"]'
     HIDDEN_SF_ROOMS = By.XPATH, '//*[@class="zenregioninfo-rooms"]'
     HIDDEN_SF_REGION = By.XPATH, '//*[@class="link zenregioninfo-region"]'
+
+class TestLocators2:
+    pass
