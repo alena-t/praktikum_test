@@ -13,6 +13,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium_testing.elements_to_find import TestLocators
 from selenium_testing.page_files import SearchForm
 
+
 class TestSomething:
 
     def test_do_something(self):
@@ -46,15 +47,15 @@ def do_something():
     # driver = webdriver.Chrome(executable_path='/Users/alena/Dev/praktikum_test/chromedriver',
     #                           options=options)
     driver.get('https://ostrovok.ru/')
-    time.sleep(3)
-    WebDriverWait(driver, 3).until(expected_conditions.text_to_be_present_in_element(
-        TestLocators.SEARCH_BUTTON, "Найти"))
-    driver.implicitly_wait(3)
-    some_element = driver.find_element(*TestLocators.SEARCH_FORM)
-    search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
-    # some_element = driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR)
+    # time.sleep(3)
+    # WebDriverWait(driver, 3).until(expected_conditions.text_to_be_present_in_element(
+    #     TestLocators.SEARCH_BUTTON, "Найти"))
+    # driver.implicitly_wait(3)
+    # search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
+    some_element = driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR)
+    some_element = driver.find_element(By.XPATH, '//*[@class="homepage-search-form-wrapper"]')
     # driver.implicitly_wait(2)
-    # WebDriverWait(driver, 5).until_not(expected_conditions.visibility_of_element_located(driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR)))
+    WebDriverWait(driver, 5).until(expected_conditions.visibility_of_element_located(driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR)))
     search_form.search_input.search_with_wait('Moscow')
     search_form.search_button.click()
     region_id = 2395

@@ -1,5 +1,7 @@
 import pytest
 
+from test_page_object.pages.main_page import MainPage
+
 
 class UserRegistration:
     def __init__(self, name, login, password):
@@ -19,8 +21,16 @@ def example_not_correct_user():
 @pytest.fixture(scope='function')
 def driver():
     driver = webdriver.Chrome(ChromeDriverManager().install())
-    driver.get('https://stellarburgers.nomoreparties.site/')
     yield driver
     driver.quit()
+
+
+@pytest.fixture(scope='function')
+def main_page(driver):
+    return MainPage(driver)
+
+@pytest.fixture(scope='function')
+def order_page(driver):
+    return OrderPage(driver)
 
 
