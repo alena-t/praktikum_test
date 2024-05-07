@@ -20,7 +20,7 @@ def example_not_correct_user():
 
 @pytest.fixture(scope='function')
 def driver():
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver = webdriver.Chrome()
     yield driver
     driver.quit()
 

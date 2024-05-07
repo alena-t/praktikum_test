@@ -1,28 +1,62 @@
-from selenium import webdriver
-
-from selenium_testing.test_file_pom import BurgerLoginPage
+import requests
 
 
-class TestBurgersLogin:
+class TestGithubApi:
 
-    driver = None
+    BASE_URL = 'https://api.github.com'
+    TOKEN = '<token>'
+    TEST_REPO_NAME = 'Hello-World'
+    USERNAME = '<username>'
 
-    @classmethod
-    def setup_class(cls):
-        cls.driver = webdriver.Chrome(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
+    def setup(self):
+        self.headers = {
+            'Authorization': f'Bearer {self.TOKEN}',
+            'Accept': 'application/vnd.github+json'
+        }
+        self.run_teardown = True
 
-    def test_registration(self):
-        self.driver.get('https://stellarburgers.nomoreparties.site/')
+    def test_get_user(self):
+        self.run_teardown = False
+        username = 'octocat'
+        response = requests.get(f'{self.BASE_URL}/users/{username}')
 
-        login_page = BurgerLoginPage(self.driver)
+        assert response.status_code == 200
+        assert response.json()['login'] == username
 
-        login_page.click_login_button()
+    def test_create_repo(self):
+        repo_data = {
+            'name': self.TEST_REPO_NAME,
+            'description': 'Тестовое описание',
+            'private': False,
+            'is_template': True
+        }
+        response = requests.post(f'{self.BASE_URL}/user/repos', headers=self.headers, json=repo_data)
 
-        login_page.register('Вася', '123@ya.ru', '123456')
+        assert response.status_code == 201
+        assert response.json()['name'] == self.TEST_REPO_NAME
 
-        current_url = self.driver.current_url
-        assert current_url == 'https://stellarburgers.nomoreparties.site/register'
+    def test_update_repo(self):
+        repo_data = {
+            'name': self.TEST_REPO_NAME,
+            'description': 'Тестовое описание',
+            'private': False,
+            'is_template': True
+        }
+        requests.post(f'{self.BASE_URL}/user/repos', headers=self.headers, json=repo_data)
 
-    @classmethod
-    def teardown_class(cls):
-        cls.driver.quit()
+        new_description = 'Новое описание'
+        update_data = {'description': new_description}
+        response = requests.patch(
+            f'{self.BASE_URL}/repos/{self.USERNAME}/{self.TEST_REPO_NAME}', headers=self.headers, json=update_data
+        )
+
+        assert response.status_code == 200
+        assert response.json()['description'] == new_description
+
+    def teardown(self):
+        if self.run_teardown:
+            response = requests.delete(
+                f'{self.BASE_URL}/repos/{self.USERNAME}/{self.TEST_REPO_NAME}', headers=self.headers
+            )
+
+            assert response.status_code == 204
