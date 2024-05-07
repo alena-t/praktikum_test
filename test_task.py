@@ -2,7 +2,7 @@ delivery_distance = {
     'more_30': 300,
     'less_30': 200,
     'less_10': 100,
-    'less_2': 50,
+    'less_2': 500,
 }
 
 dimensions = {

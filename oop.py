@@ -25,7 +25,7 @@ class Animal:
     @classmethod
     def create_cat_without_name(cls):
         name = 'Барсик Второй Шикарный'
-        cls(name)
+        return cls(name)
 
 
 class Cat(Animal):

@@ -17,7 +17,7 @@ class CatForTest:
         self.name = new_name
 
     def add_mustage(self, mustache_color):
-        self.mustage.append(mustache_color)
+        self.mustache.append(mustache_color)
 
     def add_cat_color(self, color, where):
         self.color[where] = color
@@ -35,7 +35,7 @@ class CatForTest:
 class StreetCat(CatForTest):
 
     def get_mustage(self):
-        return self.mustage
+        return self.mustache
 
 
 cat_1 = CatForTest(name="Tom")
