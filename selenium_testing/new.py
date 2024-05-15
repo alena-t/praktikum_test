@@ -1,62 +1,48 @@
-import requests
+# создаём собственный класс-исключение и наследуем его от класса Exception
+class MyAttributeException(Exception):
+
+    # задаём метод инициации, который на вход может принимать аргумент
+    def __init__(self, message=None):
+        self.message = message
+
+    # задаём метод для вывода информации на экран
+    def __str__(self):
+        if self.message:
+            return f'MyAttributeException: {self.message}'
+        return 'Произошло исключение MyAttributeException'
 
 
-class TestGithubApi:
+class Bird:
 
-    BASE_URL = 'https://api.github.com'
-    TOKEN = '<token>'
-    TEST_REPO_NAME = 'Hello-World'
-    USERNAME = '<username>'
+    def __init__(self, name):
+        self.head = 1
+        self.tail = 1
+        self.paws = 2
+        self.wings = 2
+        self.name = name
 
-    def setup(self):
-        self.headers = {
-            'Authorization': f'Bearer {self.TOKEN}',
-            'Accept': 'application/vnd.github+json'
-        }
-        self.run_teardown = True
+    def get_info_about_bird(self):
+        return f'У птицы по имени {self.name} {self.paws} лапы, {self.tail} хвост и {self.head} голова. А ещё {self.wings} крыла!'
 
-    def test_get_user(self):
-        self.run_teardown = False
-        username = 'octocat'
-        response = requests.get(f'{self.BASE_URL}/users/{username}')
 
-        assert response.status_code == 200
-        assert response.json()['login'] == username
+# допиши код ниже
+def get_info_about_animal(some_animal, attribute):
+    try:
+        if attribute == 'feathers':
+            animal_attribute = some_animal.feathers
+        else:
+            animal_attribute = some_animal.name
+    except AttributeError:
+        raise MyAttributeException('Неизвестное количество перьев у птицы')
+    finally:
+        print(some_animal.get_info_about_bird())
 
-    def test_create_repo(self):
-        repo_data = {
-            'name': self.TEST_REPO_NAME,
-            'description': 'Тестовое описание',
-            'private': False,
-            'is_template': True
-        }
-        response = requests.post(f'{self.BASE_URL}/user/repos', headers=self.headers, json=repo_data)
 
-        assert response.status_code == 201
-        assert response.json()['name'] == self.TEST_REPO_NAME
+bird = Bird('Кеша')
+get_info_about_animal(bird, 'wings')  # выведет информацию о животном
+get_info_about_animal(bird, 'feathers')  # выведет информацию о животном и вызовет пользовательское исключение
 
-    def test_update_repo(self):
-        repo_data = {
-            'name': self.TEST_REPO_NAME,
-            'description': 'Тестовое описание',
-            'private': False,
-            'is_template': True
-        }
-        requests.post(f'{self.BASE_URL}/user/repos', headers=self.headers, json=repo_data)
-
-        new_description = 'Новое описание'
-        update_data = {'description': new_description}
-        response = requests.patch(
-            f'{self.BASE_URL}/repos/{self.USERNAME}/{self.TEST_REPO_NAME}', headers=self.headers, json=update_data
-        )
-
-        assert response.status_code == 200
-        assert response.json()['description'] == new_description
-
-    def teardown(self):
-        if self.run_teardown:
-            response = requests.delete(
-                f'{self.BASE_URL}/repos/{self.USERNAME}/{self.TEST_REPO_NAME}', headers=self.headers
-            )
-
-            assert response.status_code == 204
+# должен получиться такой вывод:
+# У птицы по имени Кеша 2 лапы, 1 хвост и 1 голова. А ещё 2 крыла!
+# У птицы по имени Кеша 2 лапы, 1 хвост и 1 голова. А ещё 2 крыла!
+# MyAttributeException: Неизвестное количество перьев у птицы

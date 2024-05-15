@@ -34,3 +34,8 @@ def order_page(driver):
     return OrderPage(driver)
 
 
+@pytest.fixture
+def some_data():
+    return 'some'
+
+
