@@ -1,5 +1,6 @@
 import pytest
 
+from helpers import generate_book_name
 from test_page_object.pages.main_page import MainPage
 
 
@@ -32,5 +33,11 @@ def main_page(driver):
 @pytest.fixture(scope='function')
 def order_page(driver):
     return OrderPage(driver)
+
+
+@pytest.fixture()
+def book():
+    book = BooksCollector(name=generate_book_name())
+    return book
 
 
