@@ -17,10 +17,10 @@ from selenium_testing.page_files import SearchForm
 class TestSomething:
 
     def test_do_something(self, driver):
-        # options = Options()
-        # service = Service(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
-        # options.add_argument('--window-size=1920,1080')
-        # driver = webdriver.Chrome(service=service, options=options)
+        options = Options()
+        service = Service(executable_path='/Users/alena/Dev/praktikum_test/chromedriver')
+        options.add_argument('--window-size=1920,1080')
+        driver = webdriver.Chrome(service=service, options=options)
         driver.get('https://ostrovok.ru/')
         search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
         search_form.search_input.search_with_wait('Moscow')
@@ -47,7 +47,7 @@ def do_something():
     #                           options=options)
     driver.get('https://ostrovok.ru/')
     time.sleep(3)
-    WebDriverWait(driver, 3).until_not(expected_conditions.element_to_be_clickable(
+    WebDriverWait(driver, 3).until_not(expected_conditions.visibility_of_element_located(
         TestLocators.SEARCH_BUTTON))
     # driver.implicitly_wait(3)
     search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
@@ -56,6 +56,7 @@ def do_something():
     # some_element = driver.find_element(By.XPATH, '//*[@class="homepage-search-form-wrapper"]')
     # driver.implicitly_wait(2)
     driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR).send_keys("some")
+    driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR).clear()
     driver.find_element(*TestLocators.SEARCH_INPUT_FIELD).text
     driver.switch_to()
     driver.find_element(*TestLocators.SEARCH_BUTTON).click()

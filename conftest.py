@@ -18,7 +18,7 @@ def example_not_correct_user():
     return UserRegistration(name='', login='IvanSukhanov366', password='12345')
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def driver():
     driver = webdriver.Chrome()
     yield driver
