@@ -6,7 +6,7 @@ def contains(class_name):
 
 
 class TestLocators:
-    SEARCH_FORM_LOCATOR = By.XPATH, '//*[@class="homepage-search-form-wrapper"]'
+    SEARCH_FORM_LOCATOR = [By.XPATH, '//*[@class="homepage-search-form-wrapper"]']
     SEARCH_INPUT_FIELD = (
         By.XPATH, '//*[contains(@class, "SearchForm-module__destination")]//*[contains(@class, "Input-module__wrapper")]')
     SEARCH_BUTTON = \

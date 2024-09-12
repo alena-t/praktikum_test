@@ -29,6 +29,7 @@ class TestSomething:
         url = furl.furl(driver.current_url)
         search_page = url.args
         q_param = int(search_page['q'])
+        driver.quit()
         assert q_param == region_id, \
             f'Serp q param is {q_param}, expected Moscow with id {region_id}'
 
@@ -46,21 +47,23 @@ def do_something():
     # driver = webdriver.Chrome(executable_path='/Users/alena/Dev/praktikum_test/chromedriver',
     #                           options=options)
     driver.get('https://ostrovok.ru/')
-    time.sleep(3)
-    WebDriverWait(driver, 3).until_not(expected_conditions.element_to_be_clickable(
-        TestLocators.SEARCH_BUTTON))
+    # time.sleep(3)
+    # WebDriverWait(driver, 3).until_not(expected_conditions.element_to_be_clickable(
+    #     TestLocators.SEARCH_BUTTON))
     # driver.implicitly_wait(3)
     search_form = SearchForm(driver, TestLocators.SEARCH_FORM_LOCATOR)
     some_element = driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR)
-    some_new_element = driver.find_element(*TestLocators.SEARCH_INPUT_FIELD)
+    some_new_element = driver.find_elements(*TestLocators.SEARCH_INPUT_FIELD)
     # some_element = driver.find_element(By.XPATH, '//*[@class="homepage-search-form-wrapper"]')
-    # driver.implicitly_wait(2)
+    driver.implicitly_wait(2)
     driver.find_element(*TestLocators.SEARCH_FORM_LOCATOR).send_keys("some")
-    driver.find_element(*TestLocators.SEARCH_INPUT_FIELD).text
-    driver.switch_to()
+    text = driver.find_element(*TestLocators.SEARCH_INPUT_FIELD).text
+    # driver.switch_to()
     driver.find_element(*TestLocators.SEARCH_BUTTON).click()
     WebDriverWait(driver, 5).until(
-        expected_conditions.visibility_of_element_located(TestLocators.SEARCH_FORM_LOCATOR))
+        expected_conditions.text_to_be_present_in_element_value(
+            TestLocators.SEARCH_FORM_LOCATOR, ""))
+    time.sleep(2)
     search_form.search_input.search_with_wait('Moscow')
     search_form.search_button.click()
     region_id = 2395

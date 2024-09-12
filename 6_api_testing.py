@@ -1,3 +1,5 @@
+from unittest.mock import patch, Mock
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -12,7 +14,7 @@ def driver(request):
     elif request.param == 'chrome':
         options = ChromeOptions()
         driver = webdriver.Chrome()
-    driver.get(MAIN_PAGE_URL)
+    # driver.get(MAIN_PAGE_URL)
     yield driver
     driver.quit()
 
@@ -38,7 +40,7 @@ def some_dict():
 
 @pytest.fixture()
 def some_dict_1():
-    return {1: ''}
+    return 1, '', {}
 
 
 @pytest.fixture
@@ -58,12 +60,17 @@ def mock_bun():
         'some_dict_1'
     ]
 )
-def test_some(request, some):
-    dict_dict = request.getfixturevalue(some)
-    my_value = dict_dict[1]
+@patch('Prakticum.bun.Bun')
+def test_some(some, mock_get_price):
 
-    some_lst = []
-    for som in some:
-        mock_1 = Mock()
-        some_lst.append(mock_1)
+    burger = Burger(
+        ingredients=[mock_bun, mock_souce],
+        price=BUN_PRICE
+    )
+
+    mock_get_price.name = some
+
+    assert some == some_1 and some_2 != some_3, (
+        f"{some=}, but {some_1=} and {some_2=}, but {some_3=}"
+    )
 

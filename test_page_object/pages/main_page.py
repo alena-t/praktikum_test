@@ -1,16 +1,27 @@
+import allure
+
 from test_page_object.pages.base_page import BasePage
 
 
 class MainPage(BasePage):
 
-    def get_url(self, URL):
-        self.driver.get(URL)
+    @allure.step('Клик на вопрос')
+    def click_on_question(self, num):
+        formatted_q_locator = self.format_locator(MainPageLocators.QUESTION_LOCATOR, num)
+        self.click_on_element(formatted_q_locator)
 
-    def click_to_question_and_get_answer_text(self, locator_q, locator_a, num):
-        method, locator = locator_q
-        locator = locator.format(num)
-        self.click_on_element((method, locator))
-        return self.get_text_from_element(locator_a)
+    @allure.step('Получение текста ответа')
+    def get_text_from_answer(self, num):
+        formatted_a_locator = self.format_locator(MainPageLocators.ANSWER_LOCATOR, num)
+        return self.get_text_from_element(formatted_a_locator)
 
-    def check_answer(self, result, expected):
+    def click_to_question_and_get_answer_text(self, num):
+        self.click_on_question(num)
+        return self.get_text_from_answer(num)
+
+    @allure.step('Проверка соответствия результата')
+    @staticmethod
+    def check_answer(result, expected):
         return result == expected
+
+

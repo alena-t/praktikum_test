@@ -1,5 +1,8 @@
+from unittest.mock import Mock
+
 import pytest
 
+from helpers import generate_book_name
 from test_page_object.pages.main_page import MainPage
 
 
@@ -18,7 +21,7 @@ def example_not_correct_user():
     return UserRegistration(name='', login='IvanSukhanov366', password='12345')
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture()
 def driver():
     driver = webdriver.Chrome()
     yield driver
@@ -27,10 +30,23 @@ def driver():
 
 @pytest.fixture(scope='function')
 def main_page(driver):
-    return MainPage(driver)
+    page = MainPage(driver)
+    page.get_url(URL)
+    return page
 
 @pytest.fixture(scope='function')
 def order_page(driver):
     return OrderPage(driver)
 
 
+@pytest.fixture()
+def book():
+    book = BooksCollector(name=generate_book_name())
+    return book
+
+@pytest.fixture()
+def mock_bun():
+    mock = Mock()
+    mock.name = 'булка'
+    mock.get_name.return_value = 'булка'
+    return mock

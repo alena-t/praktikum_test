@@ -1,5 +1,5 @@
 import pytest
-from pytest_bdd import given, parsers, scenario, then
+from pytest_bdd import given, parsers, scenario, then, when
 
 from test_task import MIN_DELIVERY_SUM, delivery_cost_calculation
 from tests_features.steps_data import (
@@ -66,6 +66,9 @@ def given_step(condition):
     }
     context = conditions_map[condition]
     return context
+
+@when('Click to order button')
+def when_click_to_order_button():
 
 
 @then('I see min sum of delivery')
