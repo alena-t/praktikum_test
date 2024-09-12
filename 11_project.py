@@ -1,17 +1,24 @@
-import pytest
+import requests
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
+from conftest import driver
 
 
-class TestBooks:
+class TestGithubApi:
 
-    @pytest.mark.parametrize(
-        'score, expected_result',
-        [
-            [7, 1], [5, 2], [3, 3]
-        ]
-    )
-    def test_get_book_success(self, book, score, expected_result):
-        result = book.get_book(score)
-        assert len(result) == expected_result
+    def test_set_bun(self, mock_bun):
+        burger = Burger()
+        burger.set_bun(mock_bun)
+        assert burger.bun.name == 'булка'
 
-    def test_get_book_failed(self, book):
-        assert book.get_book() == result
+
+
+WebDriverWait(driver, 10).until_not(expected_conditions.visibility_of_element_located(
+    (By.XPATH, '//*[@class="Modal_modal_overlay__x2ZCr"]')))
+
+
+
+
+COMPLETED_ORDERS_ALL_TIME = By.XPATH, '//*[contains(@class, "text_type_main-medium") and text()="Выполнено за все время:"]/following-sibling::p'
+COMPLETED_ORDERS_TODAY = By.XPATH, '//*[contains(@class, "text_type_main-medium") and text()="Выполнено за сегодня:"]/following-sibling::p'
