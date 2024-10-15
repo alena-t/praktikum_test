@@ -1,26 +1,16 @@
-class TestCat:
 
-    def __init__(self, name):
-        self.head = 1
-        self.paws = {}
-        self.tail = []
-        self.name = name
+class TestClass:
 
-    def play_with_cat(self):
-        return f'{self.name} meow'
-
-    def say_meow(self):
-        return f'{self.name} Meow-Meow'
-
-
-if __name__ == '__main__':
-    cat = TestCat('Барсик')
-    cat_2 = TestCat('Пушок')
-    cat.tail = 0
-
-    print(cat.name)
-    print(cat.tail)
-    print(cat_2.name)
-    print(cat_2.tail)
-    print(cat.play_with_cat())
-    print(cat_2.say_meow())
+    @pytest.mark.parametrize(
+        'name, books_count',
+        [
+            (['Гордость и предубеждение'], 1),
+            (['Гордость и предубеждение', 'Гарри Поттер и ...'], 2),
+            ([], 0)
+        ]
+    )
+    def test_add_book_to_favorite(self, book, name, books_count):
+        for book_name in name:
+            book.add_book_to_favorite(book_name)
+        favorite = book.get_favorite_books()
+        assert len(favorite) == books_count
