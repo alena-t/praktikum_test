@@ -1,31 +1,31 @@
-from selenium.webdriver.common.devtools.v85.debugger import resume
+import pytest
+
+from helpers import generate_book_name
 
 
-class WrongDriverException(Exception):
-
-    def __init__(self, driver_name):
-        self.driver_name = driver_name
-
-
-    def __str__(self):
-        return f'{self.driver_name} driver do not support Chrome browser'
+@pytest.fixture
+def books_collector():
+    return BooksCollector()
 
 
-def some_test_func(arg):
+class TestBooks:
 
-    if arg > 0:
-        return arg / 10
-    elif arg < 0:
-        return 10 / arg
 
-    raise WrongDriverException(
-        driver_name='ff'
+    @pytest.mark.parametrize(
+        'book_name',
+        [
+            'Гарри Поттер и Узник Азкабана',
+            'Хоббит: туда и обратно',
+        ]
     )
+    def test_add_new_book(self, books_collector, book_name):
 
+        books_collector.add_new_book(name=book_name)
 
-if __name__ == '__main__':
+        books_dict = books_collector.get_books()
 
-    print(some_test_func(3))
-    print(some_test_func(0))
+        assert books_dict.get(book_name)
 
+    def test_add_book_genre(self, books_collector):
+        pass
 

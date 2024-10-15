@@ -9,8 +9,7 @@ class TestLocators:
     SEARCH_FORM_LOCATOR = [By.XPATH, '//*[@class="homepage-search-form-wrapper"]']
     SEARCH_INPUT_FIELD = (
         By.XPATH, '//*[contains(@class, "SearchForm-module__destination")]//*[contains(@class, "Input-module__wrapper")]')
-    SEARCH_BUTTON = \
-        By.XPATH, '//*[@data-testid="search-button"]'
+    SEARCH_BUTTON = By.XPATH, '//*[@data-testid="search-button"]'
 
     CHECK_IN_BUTTON = \
         By.XPATH, '//*[contains(@class, "SearchForm-module__dates")]//*[contains(@class, "Input-module__wrapper")][1]'
@@ -24,10 +23,10 @@ class TestLocators:
     CALENDAR = By.XPATH, '//*[contains(@class, "Datepicker-module__popup")]'
     CALENDAR_MONTH_LIST = \
         By.XPATH, '(//*[contains(@class, "MonthsList-module__wrapper")]//div[contains(@class, "Month-module__title")])'
-    CALENDAR_LAST_DAYS = \
+    CALENDAR_LAST_DAYS = (
         By.XPATH, '//*[contains(@class, "Month-module__wrapper")][last()]' \
                   '//*[contains(@class, "Week-module__week")][last()]' \
-                  '//*[contains(@class, "Day-module__wrapper")]'
+                  '//*[contains(@class, "Day-module__wrapper")]')
     CALENDAR_DAYS = By.XPATH, '//*[contains(@class, "Day-module__wrapper")]'
     CALENDAR_GRID_MONTH = \
         By.XPATH, '//*[contains(@class, "Grid-module__wrapper")]//*[contains(@class, "Month-module__wrapper")]'
