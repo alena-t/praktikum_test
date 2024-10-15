@@ -39,9 +39,14 @@ def order_page(driver):
     return OrderPage(driver)
 
 
-@pytest.fixture()
+@pytest.fixture
 def book():
     book = BooksCollector(name=generate_book_name())
+    return book
+
+@pytest.fixture
+def book_with_favorite(book):
+    book.add_book_to_favorite(name=generate_book_name())
     return book
 
 @pytest.fixture()
